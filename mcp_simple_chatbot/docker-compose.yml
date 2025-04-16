@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mcp-simple-chatbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcp-simple-chatbot
+    env_file:
+      - .env
+    volumes:
+      - ./servers_config.json:/app/servers_config.json
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    # Add these for better interactive support
+    environment:
+      - PYTHONUNBUFFERED=1
+    # Keep container running even if the main process exits
+    command: tail -f /dev/null 
